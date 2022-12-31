@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "login to docker hub"
+        run: docker login --username ${ {secrets.D_USERNAME } } --password ${ {secrets.GITHUB } }
+
+      - name: "Build Docker image"
+        run: docker build -t ${ {secrets.D_USERNAME } }/myimage .
+
+      - name: "pushing to docker hub"
+        run: docker push ${ {secrets.D_USERNAME } }/myimage
